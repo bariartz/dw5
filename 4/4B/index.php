@@ -50,10 +50,21 @@ $getData = mysqli_query($conn, "SELECT u.id, u.name, u.photo, u.email , p.id AS 
 
         <script>
             let addBtn = document.querySelector(".btn-add");
-            let editBtn = document.querySelector(".btn-add");
+            let editBtn = document.querySelector("#edit-btn");
+            let removeBtn = document.querySelector("#remove-btn");
 
             addBtn.onclick = function(){
                 window.location.href = "add-content.php";
+            }
+
+            editBtn.onclick = function(){
+                let idpost = document.querySelector(".card").getAttribute("data-id");
+                window.location.href = "edit-content.php?postid=" + idpost;
+            }
+            
+            removeBtn.onclick = function(){
+                let idpost = document.querySelector(".card").getAttribute("data-id");
+                window.location.href = "remove-content.php?postid=" + idpost;
             }
         </script>
     </body>
