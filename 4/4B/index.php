@@ -51,7 +51,7 @@ $getData = mysqli_query($conn, "SELECT u.id, u.name, u.photo, u.email , p.id AS 
         <script>
             let addBtn = document.querySelector(".btn-add");
             let editBtn = document.querySelector("#edit-btn");
-            let removeBtn = document.querySelector("#remove-btn");
+            let removeBtn = document.querySelectorAll("#remove-btn");
 
             addBtn.onclick = function(){
                 window.location.href = "add-content.php";
@@ -61,10 +61,31 @@ $getData = mysqli_query($conn, "SELECT u.id, u.name, u.photo, u.email , p.id AS 
                 let idpost = document.querySelector(".card").getAttribute("data-id");
                 window.location.href = "edit-content.php?postid=" + idpost;
             }
-            
-            removeBtn.onclick = function(){
-                let idpost = document.querySelector(".card").getAttribute("data-id");
-                window.location.href = "remove-content.php?postid=" + idpost;
+
+            for (let i = 0; i < removeBtn.length; i++) {
+                removeBtn[i].addEventListener("click", function() {
+                    const elem = this;
+                    const postLink = elem.previousElementSibling.parentElement.previousElementSibling.parentElement.previousElementSibling.parentElement.getAttribute("data-id");
+                    const url = "remove-content.php?postid=" + postLink;
+                    const rmPost = new window.XMLHttpRequest();
+                    rmPost.addEventListener("progress", function() {
+                        console.log("Sedang menghapus postingan.");
+                    }, false);
+                    rmPost.addEventListener("load", function(e) {
+                        const re = e.target.responseText;
+                        if (re === "removed") {
+                            alert("Postingan berhasil dihapus.");
+                            elem.previousElementSibling.parentElement.previousElementSibling.parentElement.previousElementSibling.parentElement.remove();
+                        } else {
+                            alert("Ada kesalahan dalam menghapus postingan. Silahkan coba lagi.");
+                        }
+                    }, false);
+                    rmPost.addEventListener("error", function() {
+                        alert("Gagal menghapus postingan. Silahkan coba lagi.");
+                    }, false);
+                    rmPost.open("GET", url, true);
+                    rmPost.send();
+                });
             }
         </script>
     </body>
