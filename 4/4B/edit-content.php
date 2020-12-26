@@ -28,7 +28,7 @@ if(empty($_SESSION['login'])){
             <button class="btn-add btn waves-effect waves-light" id="editPost">Edit</button>
         </div>
         <div class="container">
-            <form action="" method="post" id="form-posting" enctype="multipart/form-data">
+            <form action="" method="post" id="form-edit" enctype="multipart/form-data">
                 <input type="file" name="media" id="media"/>
                 <input type="hidden" name="imgfile" id="imgfile" value="<?php echo $Post['image']; ?>"/>
                 <input type="hidden" name="postid" value="<?php echo $idpost; ?>"/>
